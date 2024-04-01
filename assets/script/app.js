@@ -6,8 +6,9 @@
 //Document Objects
 const startButton = document.getElementById('start-button');
 const input = document.getElementById('input');
-const wordDisplay = document.getElementById('word-display');
+const wordDisplay = document.getElementById('random-word');
 const timer = document.getElementById('timer');
+const hits = document.getElementById('hits');
 
 //Variables and Constants
 const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
@@ -27,21 +28,29 @@ const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'buil
 
 let currentWords = [];
 let gameStart = false;
-
-
+let text = "";
+let currentWord = "";
+let hitsCounter = 0;
+let changeWord = false;
+let score = 0;
 
 
 //Reset Values for Start of Game
 function startGameReset(){
   gameStart = true;
+  input.disabled = false;
+  input.value = "";
+  hitsCounter = 0;
+  score = 0;
+
 }
 
 
 //Load Words into a new Array
 function loadWords(){
   const blankArray = []
-  for (let i = 0; i < words.length; i++){
-    blankArray.push(words[i]);
+  for (let i = 0; i < listOfWords.length; i++){
+    blankArray.push(listOfWords[i]);
   }
   return blankArray;
 }
@@ -55,9 +64,8 @@ function getRandomWord(array){
 }
 //Remove Word From an Array
 //Returns array without the word
-function removeWordFrom(array, wordToRemove){
-  const arrayMinusWord = array.filter(keep => keep !== wordToRemove);
-  return arrayMinusWord;
+function removeWordFrom(wordToRemove){
+  currentWords = currentWords.filter(keep => keep !== wordToRemove);
 }
 //Display Current Word
 function displayWord(word){
@@ -65,57 +73,86 @@ function displayWord(word){
 }
 
 
-
-// //Create End of Timer
-// function createEndOfTimer(now, gameLength){
-//   let endTimer = new Date(now);
-//   endTimer.setSeconds(endTimer.getSeconds() + gameLength);
-//   return endTimer;
-// }
-
-// //Create Current Time
-// function currentTime(){
-//   const now = new Date();
-//   return now;
-// }
-
-// //Compare Time
-// function compareTime(now,endTimer){
-//   let currentSeconds = now.getSeconds();
-//   let endSeconds = endTimer.getSeconds();
-  
-//   if(currentSeconds===endSeconds){
-//     return true;
-//   }
-//   return false;
-// }
-
-
-//Create Intreval Timer
+//Create Interval Timer
 function createTimer(gameLength) {
   const interval = setInterval(function() {
       timer.innerText = gameLength;
       gameLength--;
       if (gameLength <= 0) {
-          clearInterval(interval);
+        timerEnded();
+        clearInterval(interval);
       }
   }, 1000); 
 }
+
+//Timer Ended, Game Ends
+function timerEnded(){
+  gameStart = false;
+  input.disabled = true;
+  startButton.innerText = 'Reset';
+  console.log('timer out');
+}
+
 
 //Inital Setup For Game
 function startGame(){
   //Game Length in Seconds
   let gameLength = 3;
   startGameReset();
+
   //Timers
   createTimer(gameLength);
 
 
+  //Load Words
+  currentWords = loadWords();
+  currentWord = getRandomWord(currentWords);
+  removeWordFrom(currentWord);
+  displayWord(currentWord);
 
 }
 
 
+
+
+
+//Get Input
+function getInput(){
+  text = input.value.toLowerCase();
+  console.log(text,currentWord);
+  if (gameStart){
+
+    //Check Input Text vs Current Word
+    if(currentWord === text){
+      changeWord = true;
+      //Change to Object Later
+      score +=1;
+      input.value = "";
+    }
+    else if (!currentWord.startsWith(text)) {
+      changeWord = true;
+      input.value = "";
+      hitsCounter+=1;
+      hits.innerText = hitsCounter;
+    }
+
+    //Change Word if Needed
+    if(changeWord){
+      currentWord = getRandomWord(currentWords);
+      removeWordFrom(currentWord);
+      displayWord(currentWord);
+      changeWord = false;
+    }
+    
+
+  }
+}
+
+
+
+
+
 //Event Listeners
 startButton.addEventListener('click',startGame);
-
+input.addEventListener('input', getInput);
 
