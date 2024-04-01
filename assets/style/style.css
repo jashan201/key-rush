@@ -1,7 +1,9 @@
 @charset "utf-8";
 
 body {
-    background-image: url(../img/fast\ typing\ game\ bg.png);
+    background-image: url(../img/bg.png);
+    background-size: cover;
+    background-position: center;
     display: grid;
     justify-content: center;
     align-items: center;

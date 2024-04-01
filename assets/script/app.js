@@ -1,8 +1,6 @@
 // import classes from './class.js';
 // import * as utils from './utils.js';
 
-
-
 //Document Objects
 const startButton = document.getElementById('start-button');
 const input = document.getElementById('input');
@@ -10,7 +8,7 @@ const wordDisplay = document.getElementById('random-word');
 const timer = document.getElementById('timer');
 const hits = document.getElementById('hits');
 
-//Variables and Constants
+//List of Words, Move?
 const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
 'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute',
 'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle',
@@ -37,28 +35,31 @@ let changeWord = false;
 input.disabled = true;
 let score = 0;
 //Set Game Length in Seconds
-let gameLength = 3;
-
-
+let gameLength = 10;
 
 //Audio
 const bgMusic = new Audio('./assets/audio/bgmusic.mp3');
 bgMusic.type = 'audio/mp3';
 
+
 //Reset Values for Start of Game
 function startGameReset(){
+  //Basic Variables and ELements to Reset
   hitsCounter = 0;
   hits.innerText = (`Hits: ${hitsCounter}`)
   gameStart = true;
   input.disabled = false;
   input.value = "";
+  startButton.disabled = true;
   score = 0;
+  //Audio
   bgMusic.currentTime = 0;
   bgMusic.play();
   bgMusic.volume = 1;
+  //Focus on the Input
+  input.focus();
 
 }
-
 
 //Load Words into a new Array
 function loadWords(){
@@ -85,7 +86,6 @@ function removeWordFrom(wordToRemove){
 function displayWord(word){
   wordDisplay.innerText = word;
 }
-
 
 //Create Interval Timer
 function createTimer(gameLength) {
@@ -114,8 +114,8 @@ function timerEnded(){
 
 //Inital Setup For Game
 function startGame(){
-  //Game Length in Seconds
-  startButton.disabled = true;
+  
+  //Reset to Game Start
   startGameReset();
 
   //Timer
@@ -129,8 +129,7 @@ function startGame(){
 
 }
 
-
-//Get Input
+//Get Value from Text Input
 function getInput(){
   text = input.value.toLowerCase();
   console.log(text,currentWord);
@@ -160,6 +159,7 @@ function getInput(){
     
   }
 }
+
 //Stop Music and Fade Out
 function stopMusic() {
   fadeOut = setInterval(function() {
