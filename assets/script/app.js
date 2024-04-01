@@ -33,14 +33,18 @@ let currentWord = "";
 let hitsCounter = 0;
 let changeWord = false;
 let score = 0;
+//Set Game Length in Seconds
+let gameLength = 10;
+input.disabled = true;
 
 
 //Reset Values for Start of Game
 function startGameReset(){
+  hitsCounter = 0;
+  hits.innerText = (`Hits: ${hitsCounter}`)
   gameStart = true;
   input.disabled = false;
   input.value = "";
-  hitsCounter = 0;
   score = 0;
 
 }
@@ -79,6 +83,7 @@ function createTimer(gameLength) {
       timer.innerText = gameLength;
       gameLength--;
       if (gameLength <= 0) {
+        timer.innerText = gameLength;
         timerEnded();
         clearInterval(interval);
       }
@@ -90,19 +95,22 @@ function timerEnded(){
   gameStart = false;
   input.disabled = true;
   startButton.innerText = 'Reset';
-  console.log('timer out');
+  startButton.disabled = false;
+  
+  //Change Display Area Later
+  wordDisplay.innerText = (`Your Score is ${score}`);
+
 }
 
 
 //Inital Setup For Game
 function startGame(){
   //Game Length in Seconds
-  let gameLength = 3;
+  startButton.disabled = true;
   startGameReset();
 
   //Timers
   createTimer(gameLength);
-
 
   //Load Words
   currentWords = loadWords();
@@ -133,7 +141,7 @@ function getInput(){
       changeWord = true;
       input.value = "";
       hitsCounter+=1;
-      hits.innerText = hitsCounter;
+      hits.innerText = (`Hits: ${hitsCounter}`)
     }
 
     //Change Word if Needed
