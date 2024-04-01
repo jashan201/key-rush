@@ -1,0 +1,13 @@
+{
+  "name": "oop-assignment-5",
+  "version": "1.0.0",
+  "description": "Clean HTML",
+  "main": "index.js",
+  "scripts": { "start": "lite-server"},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
