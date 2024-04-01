@@ -2,11 +2,11 @@ import Score from './class.js';
 import * as utils from './utils.js';
 
 //Document Objects
-const startButton = document.getElementById('start-button');
-const input = document.getElementById('input');
-const wordDisplay = document.getElementById('random-word');
-const timer = document.getElementById('timer');
-const hits = document.getElementById('hits');
+const startButton = utils.getElement('start-button');
+const input = utils.getElement('input');
+const wordDisplay = utils.getElement('random-word');
+const timer = utils.getElement('timer');
+const hits = utils.getElement('hits');
 
 // List of Words, Move
 const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
@@ -17,7 +17,7 @@ const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'buil
 'pasta', 'microwave', 'jungle', 'wallet', 'canada', 'coffee', 'beauty', 'agency',
 'chocolate', 'eleven', 'technology', 'alphabet', 'knowledge', 'magician',
 'professor', 'triangle', 'earthquake', 'baseball', 'beyond', 'evolution',
-'banana', 'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music',
+'banana', 'perfume', 'computer', 'management', 'discovery', 'ambition', 'music',
 'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 'button',
 'superman', 'library', 'unboxing', 'bookstore', 'language', 'homework',
 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery',
@@ -34,7 +34,7 @@ let changeWord = false;
 input.disabled = true;
 let score = 0;
 //Set Game Length in Seconds
-let gameLength = 10;
+let gameLength = 99;
 
 //Audio
 const bgMusic = new Audio('./assets/audio/bgmusic.mp3');
@@ -76,8 +76,7 @@ function getRandomWord(array){
   return word;
 }
 
-//Remove Word From an Array
-//Returns array without the word
+//Remove Word From an CurrentWords Array
 function removeWordFrom(wordToRemove){
   currentWords = currentWords.filter(keep => keep !== wordToRemove);
 }
@@ -117,7 +116,7 @@ function timerEnded(){
   const myScore = new Score(new Date(), hitsCounter, calculatePercentage());
 
   //Display Score
-  wordDisplay.innerText = (`Your Score is ${myScore.percentage}`);
+  wordDisplay.innerText = (`Your Score is ${myScore.percentage}%`);
 }
 
 //Inital Setup For Game
@@ -185,6 +184,5 @@ function stopMusic() {
 }
 
 //Event Listeners
-startButton.addEventListener('click',startGame);
-input.addEventListener('input', getInput);
-
+utils.listen('click', startButton, startGame);
+utils.listen('input', input, getInput);
