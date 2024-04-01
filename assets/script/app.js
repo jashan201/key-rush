@@ -1,5 +1,5 @@
-// import classes from './class.js';
-// import * as utils from './utils.js';
+import Score from './class.js';
+import * as utils from './utils.js';
 
 //Document Objects
 const startButton = document.getElementById('start-button');
@@ -8,7 +8,7 @@ const wordDisplay = document.getElementById('random-word');
 const timer = document.getElementById('timer');
 const hits = document.getElementById('hits');
 
-// List of Words, Move?
+// List of Words, Move
 const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
 'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute',
 'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle',
@@ -23,12 +23,6 @@ const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'buil
 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery',
 'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
 'keyboard', 'window'];
-
-
-//For Testing Endstate of Game
-// const listOfWords =['pig','goat'];
-
-
 
 //Game Variables
 let currentWords = [];
@@ -51,7 +45,7 @@ bgMusic.type = 'audio/mp3';
 function startGameReset(){
   //Basic Variables and ELements to Reset
   hitsCounter = 0;
-  hits.innerText = (`Hits: ${hitsCounter}`)
+  hits.innerText = (`Typos: ${hitsCounter}`)
   gameStart = true;
   input.disabled = false;
   input.value = "";
@@ -63,7 +57,6 @@ function startGameReset(){
   bgMusic.volume = 1;
   //Focus on the Input
   input.focus();
-
 }
 
 //Load Words into a new Array
@@ -82,11 +75,13 @@ function getRandomWord(array){
   let word = array[num];
   return word;
 }
+
 //Remove Word From an Array
 //Returns array without the word
 function removeWordFrom(wordToRemove){
   currentWords = currentWords.filter(keep => keep !== wordToRemove);
 }
+
 //Display Current Word
 function displayWord(word){
   wordDisplay.innerText = word;
@@ -105,6 +100,11 @@ function createTimer(gameLength) {
   }, 1000); 
 }
 
+//For Scoreboard
+function calculatePercentage(){
+  return Math.floor((score/listOfWords.length)*100);
+}
+
 //Timer Ended, Game Ends
 function timerEnded(){
   gameStart = false;
@@ -113,8 +113,11 @@ function timerEnded(){
   startButton.disabled = false;
   stopMusic();
 
-  //Change Display Area Later
-  wordDisplay.innerText = (`Your Score is ${score}`);
+  //Object
+  const myScore = new Score(new Date(), hitsCounter, calculatePercentage());
+
+  //Display Score
+  wordDisplay.innerText = (`Your Score is ${myScore.percentage}`);
 }
 
 //Inital Setup For Game
@@ -137,7 +140,7 @@ function startGame(){
 //Get Value from Text Input
 function getInput(){
   text = input.value.toLowerCase();
-  console.log(text,currentWord);
+  // console.log(text,currentWord);
   if (gameStart){
 
     //Check Input Text vs Current Word
@@ -151,7 +154,7 @@ function getInput(){
       changeWord = true;
       input.value = "";
       hitsCounter+=1;
-      hits.innerText = (`Hits: ${hitsCounter}`)
+      hits.innerText = (`Typos: ${hitsCounter}`)
     }
 
     //Change Word if Needed
@@ -165,15 +168,13 @@ function getInput(){
       displayWord(currentWord);
       changeWord = false;
       }
-
-      
     }
   }
 }
 
 //Stop Music and Fade Out
 function stopMusic() {
-  fadeOut = setInterval(function() {
+  const fadeOut = setInterval(function() {
       if (bgMusic.volume > 0) {
         bgMusic.volume = Math.max(bgMusic.volume-0.1, 0);
       } 
