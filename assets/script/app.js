@@ -26,17 +26,24 @@ const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'buil
 'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
 'keyboard', 'window'];
 
+
+//Game Variables
 let currentWords = [];
 let gameStart = false;
 let text = "";
 let currentWord = "";
 let hitsCounter = 0;
 let changeWord = false;
+input.disabled = true;
 let score = 0;
 //Set Game Length in Seconds
-let gameLength = 10;
-input.disabled = true;
+let gameLength = 3;
 
+
+
+//Audio
+const bgMusic = new Audio('./assets/audio/bgmusic.mp3');
+bgMusic.type = 'audio/mp3';
 
 //Reset Values for Start of Game
 function startGameReset(){
@@ -46,6 +53,9 @@ function startGameReset(){
   input.disabled = false;
   input.value = "";
   score = 0;
+  bgMusic.currentTime = 0;
+  bgMusic.play();
+  bgMusic.volume = 1;
 
 }
 
@@ -62,7 +72,7 @@ function loadWords(){
 //Get a Random Word from an Array
 //Returns that word
 function getRandomWord(array){
-  let num = (Math.floor(Math.random()*array.length))+1;
+  let num = (Math.floor(Math.random()*array.length));
   let word = array[num];
   return word;
 }
@@ -96,12 +106,11 @@ function timerEnded(){
   input.disabled = true;
   startButton.innerText = 'Reset';
   startButton.disabled = false;
-  
+  stopMusic();
+
   //Change Display Area Later
   wordDisplay.innerText = (`Your Score is ${score}`);
-
 }
-
 
 //Inital Setup For Game
 function startGame(){
@@ -109,7 +118,7 @@ function startGame(){
   startButton.disabled = true;
   startGameReset();
 
-  //Timers
+  //Timer
   createTimer(gameLength);
 
   //Load Words
@@ -119,9 +128,6 @@ function startGame(){
   displayWord(currentWord);
 
 }
-
-
-
 
 
 //Get Input
@@ -152,13 +158,19 @@ function getInput(){
       changeWord = false;
     }
     
-
   }
 }
-
-
-
-
+//Stop Music and Fade Out
+function stopMusic() {
+  fadeOut = setInterval(function() {
+      if (bgMusic.volume > 0) {
+        bgMusic.volume = Math.max(bgMusic.volume-0.1, 0);
+      } 
+      else {
+          clearInterval(fadeOut);
+      }
+  }, 100); 
+}
 
 //Event Listeners
 startButton.addEventListener('click',startGame);
