@@ -136,3 +136,39 @@ function displaySuggestions(array){
 //Event Listeners
 utils.listen('click', button, searchMovie);
 utils.listen('input', search, searchInput);
+
+/* Unused Section for Key Rush */
+
+
+// //Create End of Timer
+// function createEndOfTimer(now, gameLength){
+//   let endTimer = new Date(now);
+//   endTimer.setSeconds(endTimer.getSeconds() + gameLength);
+//   return endTimer;
+// }
+
+// //Create Current Time
+// function currentTime(){
+//   const now = new Date();
+//   return now;
+// }
+
+// //Compare Time
+// function compareTime(now,endTimer){
+//   let currentSeconds = now.getSeconds();
+//   let endSeconds = endTimer.getSeconds();
+  
+//   if(currentSeconds===endSeconds){
+//     return true;
+//   }
+//   return false;
+// }
+
+
+
+
+
+
+
+
+

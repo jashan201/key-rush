@@ -1,64 +1,84 @@
-
 @charset "utf-8";
 
-
-:root{
-  --background-dark: rgb(24,23,32);
-  --font-text: rgb(255, 255, 255);
-  --box-width: 360px;
+body {
+    background-image: url(../img/fast\ typing\ game\ bg.png);
+    display: grid;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
-  width: min(100% - 30px, 1080px);
-  margin-inline: auto;
+    display: grid;
+    align-items: center;
+    place-items: center;
+    color: #fff;
 }
 
-body {
-  background-color: var(--background-dark);
-  font-family: "Open Sans", sans-serif,'Arial','Helvetica';
-  display: flex;
-  justify-content: center;
-  color: var(--font-text);
+.game-contents {
+    display: grid;
+    place-items: center;
 }
 
-
-
-/*------------------------------------------*/
-/*              Display                     */
-/*------------------------------------------*/
-
-
-.box {
-  height: 150px;
-  width: 200px;
-  background: red;
-  border: 5px black solid;
+h1 {
+    color: #C8FF00;
+    font-size: 45px;
 }
 
-
-/*------------------------------------------*/
-/*              Utility                     */
-/*------------------------------------------*/
-
-
-.space-around {
-  justify-content: space-around;
+.start-button {
+    position: absolute;
+    top: 45px;
+    right: 75px;
+    background-color: #C8FF00;
+    height: 40px;
+    width: 100px;
+    font-size: 25px;
+    font-weight: 500;
+    border-radius: 5px;
 }
 
-.space-evenly {
-  justify-content: space-evenly;
+.hits {
+    font-size: 20px;
 }
 
-.space-between {
-  justify-content: space-between;
+.timer {
+    background-color: #C8FF00;
+    height: 45px;
+    width: 45px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    font-size: 25px;
+    font-weight: 500;
 }
 
-.flex {
-  display: flex;
+#random-word {
+    font-size: 50px;
+    font-weight: 500;
 }
 
-.center {
-  align-content: center;
+.input {
+    height: 40px;
+    width: 300px;
+    padding: 10px;
+    font-size: 25px;
+    font-weight: 600;
+    border-radius: 5px;
 }
 
+/* ------------------------------ */
+/*     responsiveness             */
+/* ------------------------------ */
 
+/* ------------------------------ */
+/*     mobile view                */
+/* ------------------------------ */
+
+@media (max-width: 480px) {
+
+    .start-button {
+        margin-top: 420px;
+        margin-right: 30px;
+    }
+}

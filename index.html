@@ -17,23 +17,15 @@
     <script src="./assets/script/app.js" defer></script>
   </head>
   <body>
-    <div class="container">
-      <h1>World of WordCraft</h1>
-      <div class="display-area">
-        <div class="box timer-box">
-          <h2 id="timer"></h2>
+      <div class="container">
+        <h1>Key Rush</h1>
+        <button class="start-button" id="start-button">Start</button>
+        <div class="game-contents">
+            <div class="hits" id="hits">Hits: 0</div>
+            <div class="timer" id="timer">00</div>
+            <section id="random-word">word</section>
+            <input type="text" class="input" id="input" placeholder="type here">
         </div>
-        <div class="box display-hits"></div>
-        <div class="box word-box">
-          <h2 id="word-display"></h2>
-        </div>
-        <div class="box display-input" id="input"></div>
-        <input type="text">
       </div>
-      <div class="button-area">
-        <input type="button" id="start-button" class="restart" value="Start">
-      </div>
-    </div>
-	  
   </body>
 </html>
