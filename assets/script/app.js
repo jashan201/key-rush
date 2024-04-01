@@ -8,7 +8,7 @@ const wordDisplay = document.getElementById('random-word');
 const timer = document.getElementById('timer');
 const hits = document.getElementById('hits');
 
-//List of Words, Move?
+// List of Words, Move?
 const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
 'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute',
 'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle',
@@ -23,6 +23,11 @@ const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'buil
 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery',
 'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
 'keyboard', 'window'];
+
+
+//For Testing Endstate of Game
+// const listOfWords =['pig','goat'];
+
 
 
 //Game Variables
@@ -151,12 +156,18 @@ function getInput(){
 
     //Change Word if Needed
     if(changeWord){
+      if(currentWords.length === 0){
+        timerEnded();
+      }
+    else {
       currentWord = getRandomWord(currentWords);
       removeWordFrom(currentWord);
       displayWord(currentWord);
       changeWord = false;
+      }
+
+      
     }
-    
   }
 }
 
