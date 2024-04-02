@@ -43,6 +43,7 @@ bgMusic.type = 'audio/mp3';
 
 //Reset Values for Start of Game
 function startGameReset(){
+
   //Basic Variables and ELements to Reset
   hitsCounter = 0;
   hits.innerText = (`Typos: ${hitsCounter}`)
@@ -51,11 +52,13 @@ function startGameReset(){
   input.value = "";
   startButton.disabled = true;
   score = 0;
+
   //Audio
   bgMusic.currentTime = 0;
   bgMusic.play();
   bgMusic.volume = 1;
   //Focus on the Input
+
   input.focus();
 }
 
@@ -116,7 +119,7 @@ function timerEnded(){
   const myScore = new Score(new Date(), hitsCounter, calculatePercentage());
 
   //Display Score
-  wordDisplay.innerText = (`Your Score is ${myScore.percentage}%`);
+  wordDisplay.innerText = (`Your Score: ${myScore.percentage}%`);
 }
 
 //Inital Setup For Game
@@ -139,16 +142,17 @@ function startGame(){
 //Get Value from Text Input
 function getInput(){
   text = input.value.toLowerCase();
-  // console.log(text,currentWord);
   if (gameStart){
 
     //Check Input Text vs Current Word
     if(currentWord === text){
       changeWord = true;
+
       //Change to Object Later
       score +=1;
       input.value = "";
     }
+
     else if (!currentWord.startsWith(text)) {
       changeWord = true;
       input.value = "";
@@ -160,8 +164,7 @@ function getInput(){
     if(changeWord){
       if(currentWords.length === 0){
         timerEnded();
-      }
-    else {
+      } else {
       currentWord = getRandomWord(currentWords);
       removeWordFrom(currentWord);
       displayWord(currentWord);
