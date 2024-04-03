@@ -32,7 +32,10 @@ let currentWord = "";
 let hitsCounter = 0;
 let changeWord = false;
 input.disabled = true;
+let resetButton = false;
 let score = 0;
+let interval;
+
 //Set Game Length in Seconds
 let gameLength = 99;
 
@@ -43,14 +46,20 @@ bgMusic.type = 'audio/mp3';
 
 //Reset Values for Start of Game
 function startGameReset(){
+  
   //Basic Variables and ELements to Reset
   hitsCounter = 0;
   hits.innerText = (`Typos: ${hitsCounter}`)
   gameStart = true;
   input.disabled = false;
   input.value = "";
-  startButton.disabled = true;
+  timer.innerText = 99;
   score = 0;
+
+  //Reset Button Turned On
+  startButton.innerText = 'Reset';
+  resetButton = true;
+
   //Audio
   bgMusic.currentTime = 0;
   bgMusic.play();
@@ -88,7 +97,8 @@ function displayWord(word){
 
 //Create Interval Timer
 function createTimer(gameLength) {
-  const interval = setInterval(function() {
+  clearInterval(interval);
+  interval = setInterval(function() {
       timer.innerText = gameLength;
       gameLength--;
       if (gameLength <= 0) {
@@ -108,8 +118,9 @@ function calculatePercentage(){
 function timerEnded(){
   gameStart = false;
   input.disabled = true;
-  startButton.innerText = 'Reset';
+  startButton.innerText = 'Start';
   startButton.disabled = false;
+  resetButton = false;
   stopMusic();
 
   //Object
