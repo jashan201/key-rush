@@ -1,5 +1,3 @@
-
-
 class Score {
   #date;
   #hits;
@@ -11,8 +9,7 @@ class Score {
       this.#percentage = percentage;
   }
 
-
-
+  
   set date(date){
     this.#date = date;
   }
@@ -40,8 +37,6 @@ class Score {
 
 
 
-}  
-// const scoreObject = new Score(new Date(), hitsCounter, calculatePercentage(hitsCounter));
-
+}
 
 export default Score;
