@@ -174,6 +174,7 @@ function getInput(){
     if(changeWord){
       if(currentWords.length === 0){
         timerEnded();
+        clearInterval(interval);
       } else {
       currentWord = getRandomWord(currentWords);
       removeWordFrom(currentWord);
