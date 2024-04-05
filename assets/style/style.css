@@ -94,30 +94,35 @@ h1 {
     background-color: #1A1D3A;
     border-radius: 5px;
     width: 350px;
-    height: 620px;
+    height: 550px;
     position: absolute;
     top: 20%;
-    left: 78%;
+    left: 70%;
     padding: 15px;
     z-index: 999;
     color: #ffffff;
     
   
   
-    h2 {
-      font-size: 28px;
-    }
+    /* .modal{
+      font-size: 35px;
+    } */
+
     #modal-title{
       font-size: 28px;
     }
+
     p{
       font-size: 20px;
       margin: 20px 0;
     }
+
+    .score-box h2 {
+      font-size: 30px;
+    }
   }
   
   .score-box {
-    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     color: #000;
@@ -161,12 +166,25 @@ h1 {
 
 .score-board{
     visibility: hidden;
-    background-color: #c8ff005d;
+    background-color: #c8ff0097;
 }
+
+.score-board h2 {
+  font-size: 40px;
+  margin-bottom: 5px;
+  color: #000;
+}
+
 .input-modal    {
     visibility: hidden;
 }
 
+.titles {
+  color: #fff;
+  width: 100%;
+  font-size: 40px;
+  visibility: hidden;
+}
 
 /* ------------------------------ */
 /*     responsiveness             */
