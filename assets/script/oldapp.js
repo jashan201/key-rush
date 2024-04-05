@@ -15,6 +15,10 @@ const scoreBoard = utils.select('.score-board');
 const overlay = utils.select('.overlay');
 const displayScoreArea = utils.getElement('display-scores');
 
+const { log } = console;
+
+// localStorage.clear();
+
 
 // List of Words, Move
 const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
@@ -45,13 +49,9 @@ let score = 0;
 let interval;
 
 //Score Variables
-console.log(localStorage.getItem('scores'));
-// localStorage.removeItem('scores');
-const scores = JSON.parse(localStorage.getItem('scores'));
-
 
 //Set Game Length in Seconds
-let gameLength = 5;
+let gameLength = 1;
 
 //Audio
 const bgMusic = new Audio('./assets/audio/bgmusic.mp3');
@@ -232,39 +232,43 @@ function stopMusic() {
 }
 
 
-//Scores
-
-
+//SCORES SECTION!!!!!!
 
 //ScoreBoard Functions
 function showScoreBoard(){
   //Clear Previous Scores
   displayScoreArea.innerHTML = "";
+
+  //Show the ScoreBoard
   show(scoreBoard);
-  
+
+  //Records
   let currentRecord = createScoreObject();
-  // localStorage.setItem('scores',currentRecord);
-  let previousRecords = (localStorage.getItem("scores"));
-  sortScores(currentRecord,previousRecords);
+  let previousRecordString = localStorage.getItem('scores');
 
-  localStorage.setItem('scores',currentRecord);
+  //Used ChatGTP Here
+  let previousRecords = previousRecordString ? JSON.parse(previousRecordString) : [];
+  let combinedRecords = previousRecords.concat(currentRecord);
+
+  //Sort Records
+  sortScores(combinedRecords);
+  localStorage.setItem('scores', JSON.stringify(combinedRecords));
 
 }
 
-//Sort Current and Previous Records
-function sortScores(cr, pr){
-  const recordArray = [cr];
-  console.log(pr);
-  if (pr.length > 0 && pr != null){
-    recordArray.push(pr);
+//Sort Array and Limit to 9, due to spacing issues
+function sortScores(recordArray){
+  let objectArray = [];
+  for(let i = 0; i < recordArray.length; i++){
+    objectArray.push(JSON.parse(recordArray[i]));
   }
-  recordArray.sort((a, b) => b.score - a.score);
-  recordArray.sort((a, b) => b.date - a.date);
-  
-  displayRecords(recordArray);
-  localStorage.setItem('scores',currentRecord);
-
+  //Sort, Then Limit to 9
+  objectArray.sort((a, b) => b.score - a.score);
+  const objectArray10 = objectArray.slice(0, 9);
+  displayRecords(objectArray10);
 }
+
+
 
 //Create HTML Element Functions
 //Creating HTML Elements with Text Content
@@ -292,43 +296,28 @@ function createScoreListing(div,placeh2,scoreh2,dateh2){
 
 //Display Reconds
 function displayRecords(recordArray){
-  const newArray = [];
+
   for(let i = 0; i < recordArray.length; i++){
     console.log(recordArray[i]);
-    let obj = JSON.parse(recordArray[i]);
+    let obj = (recordArray[i]);
     let scoreBox = createDiv('score-box');
     let placeh2 = createHTML('h2', i+1);
     let scoreh2 = createHTML('h2', obj.score);
     let dateh2 = createHTML('h2', obj.date);
     createScoreListing(scoreBox,placeh2,scoreh2,dateh2);
-    newArray.push(obj);
     if (i > 9){
       break;
     }
   }
-  
-  console.log(newArray);
-  console.log(JSON.stringify(newArray));
-  // localStorage.setItem('scores',newArray);
-
 }
 
-
-
-//Create Current Score Object and Stringify It
+//Creates the Current Score Object
 function createScoreObject(){
   let date = new Date();
   let strDate = (`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`)
   const scoreObj = {'score':hitsCounter, 'date': strDate};
   return (JSON.stringify(scoreObj));
 }
-
-//Storage
-function createLocalStorage(){
-  localStorage.setItem('user','gabe');
-}
-
-
 
 
 //Event Listeners
