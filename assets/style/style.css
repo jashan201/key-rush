@@ -165,7 +165,6 @@ h1 {
 
 .score-board h2 {
   font-size: 40px;
-  margin-bottom: 5px;
   color: #000;
 }
 
@@ -174,9 +173,12 @@ h1 {
 }
 
 .titles {
-  color: #fff;
-  width: 100%;
-  font-size: 40px;
+  color: #000;
+  width: 80%;
+  font-size: 30px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
 }
 
 /* ------------------------------ */
