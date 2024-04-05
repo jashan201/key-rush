@@ -8,12 +8,12 @@ const wordDisplay = utils.getElement('random-word');
 const timer = utils.getElement('timer');
 const hits = utils.getElement('hits');
 //Modal Elements
-const inputName = utils.getElement('input-name');
-const inputButton = utils.getElement('input-button');
-const inputModal = utils.select('.input-modal');
+// const inputName = utils.getElement('input-name');
+// const inputButton = utils.getElement('input-button');
+// const inputModal = utils.select('.input-modal');
 const scoreBoard = utils.select('.score-board');
 const overlay = utils.select('.overlay');
-
+const displayScoreArea = utils.getElement('display-scores');
 
 
 // List of Words, Move
@@ -44,8 +44,14 @@ let resetButton = false;
 let score = 0;
 let interval;
 
+//Score Variables
+// console.log(localStorage.getItem('scores'));
+// localStorage.removeItem('scores');
+// const scores = JSON.parse(localStorage.getItem('scores'));
+
+
 //Set Game Length in Seconds
-let gameLength = 3;
+let gameLength = 5;
 
 //Audio
 const bgMusic = new Audio('./assets/audio/bgmusic.mp3');
@@ -67,7 +73,7 @@ function startGameReset(){
   
   //Basic Variables and ELements to Reset
   hitsCounter = 0;
-  hits.innerText = (`Typos: ${hitsCounter}`)
+  hits.innerText = (`Hits: ${hitsCounter}`)
   gameStart = true;
   input.disabled = false;
   input.value = "";
@@ -82,9 +88,13 @@ function startGameReset(){
   bgMusic.currentTime = 0;
   bgMusic.play();
   bgMusic.volume = 1;
-  //Focus on the Input
 
+  //Focus on the Input
   input.focus();
+
+  //Hide Scoreboard
+  hide(scoreBoard);
+
 }
 
 //Load Words into a new Array
@@ -130,7 +140,7 @@ function createTimer(gameLength) {
 
 //For Scoreboard
 function calculatePercentage(){
-  return Math.floor((score/listOfWords.length)*100);
+  return Math.floor((hitsCounter/listOfWords.length)*100);
 }
 
 //Timer Ended, Game Ends
@@ -146,10 +156,11 @@ function timerEnded(){
   const myScore = new Score(new Date(), hitsCounter, calculatePercentage());
 
   //Display Score
-  wordDisplay.innerText = (`Your Score: ${myScore.percentage}%`);
+  wordDisplay.innerText = (`Your Score: ${hitsCounter}`);
 
   //Display Scoreboard
-  loadScoreInput();
+  createScoreObject();
+  showScoreBoard();
 
 }
 
@@ -180,15 +191,17 @@ function getInput(){
       changeWord = true;
 
       //Change to Object Later
-      score +=1;
+      hitsCounter +=1;
+      hits.innerText = (`Hits: ${hitsCounter}`);
       input.value = "";
     }
 
+    //Maybe Use Later to Track Typos
     else if (!currentWord.startsWith(text)) {
-      changeWord = true;
-      input.value = "";
-      hitsCounter+=1;
-      hits.innerText = (`Typos: ${hitsCounter}`)
+      // changeWord = true;
+      // input.value = "";
+      // hitsCounter+=1;
+      // hits.innerText = (`Typos: ${hitsCounter}`)
     }
 
     //Change Word if Needed
@@ -219,32 +232,94 @@ function stopMusic() {
 }
 
 
+//Scores
+
+
+
 //ScoreBoard Functions
-//
-function loadScoreInput(){
-  show(inputModal);
-  show(overlay);
-
-
-
-  //Change to getInput from InputName and validate
-
-
-}
-
-//Validate and Get Input from Name Entry
-function getInputName(){
-  if(inputName.value.length > 0){
-    showScoreBoard();
-  }
-}
-
 function showScoreBoard(){
+  //Clear Previous Scores
+  displayScoreArea.innerHTML = "";
   show(scoreBoard);
-  hide(inputModal);
+  // let currentRecord = createScoreObject();
+  // // localStorage.setItem('scores',currentRecord);
+  // let previousRecords = (localStorage.getItem("scores"));
+  // sortScores(currentRecord,previousRecords);
+
+  // localStorage.setItem('scores',currentRecord);
+
+}
+
+//Sort Current and Previous Records
+function sortScores(cr, pr){
+  const recordArray = [cr];
+  if (pr.length > 0){
+    recordArray.push(pr);
+  }
+  recordArray.sort((a, b) => b.score - a.score);
+  recordArray.sort((a, b) => b.date - a.date);
+  
+  displayRecords(recordArray);
+  localStorage.setItem('scores',currentRecord);
+
+}
+
+//Create HTML Element Functions
+//Creating HTML Elements with Text Content
+function createHTML(tag, content) {
+  const element = document.createElement(tag);
+  element.innerText = content;
+  return element;
+};
+
+//Creating Divs with Classes
+function createDiv(className){
+  const div = document.createElement('div');
+  div.classList.add(className);
+  return div;
+};
+
+//Create Score Div with H2s
+function createScoreListing(div,placeh2,scoreh2,dateh2){
+  div.appendChild(placeh2);
+  div.appendChild(scoreh2);
+  div.appendChild(dateh2);
+  displayScoreArea.appendChild(div);
 }
 
 
+//Display Reconds
+function displayRecords(recordArray){
+  const newArray = [];
+  for(let i = 0; i < recordArray.length; i++){
+    console.log(recordArray[i]);
+    let obj = JSON.parse(recordArray[i]);
+    let scoreBox = createDiv('score-box');
+    let placeh2 = createHTML('h2', i+1);
+    let scoreh2 = createHTML('h2', obj.score);
+    let dateh2 = createHTML('h2', obj.date);
+    createScoreListing(scoreBox,placeh2,scoreh2,dateh2);
+    newArray.push(obj);
+    if (i > 9){
+      break;
+    }
+  }
+  
+  console.log(newArray);
+  console.log(JSON.stringify(newArray));
+  // localStorage.setItem('scores',newArray);
+
+}
+
+
+
+//Create Current Score Object and Stringify It
+function createScoreObject(){
+  let date = new Date();
+  let strDate = (`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`)
+  const scoreObj = {'score':hitsCounter, 'date': strDate};
+  return (JSON.stringify(scoreObj));
+}
 
 //Storage
 function createLocalStorage(){
@@ -257,4 +332,3 @@ function createLocalStorage(){
 //Event Listeners
 utils.listen('click', startButton, startGame);
 utils.listen('input', input, getInput);
-utils.listen('click', inputButton, getInputName);
