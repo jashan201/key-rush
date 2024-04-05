@@ -7,6 +7,14 @@ const input = utils.getElement('input');
 const wordDisplay = utils.getElement('random-word');
 const timer = utils.getElement('timer');
 const hits = utils.getElement('hits');
+//Modal Elements
+const inputName = utils.getElement('input-name');
+const inputButton = utils.getElement('input-button');
+const inputModal = utils.select('.input-modal');
+const scoreBoard = utils.select('.score-board');
+const overlay = utils.select('.overlay');
+
+
 
 // List of Words, Move
 const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
@@ -37,17 +45,26 @@ let score = 0;
 let interval;
 
 //Set Game Length in Seconds
-let gameLength = 99;
+let gameLength = 3;
 
 //Audio
 const bgMusic = new Audio('./assets/audio/bgmusic.mp3');
 bgMusic.type = 'audio/mp3';
 
 
+//Show and Hide Elements
+function show(element){
+  element.style.visibility = 'visible';
+}
+function hide(element){
+  element.style.visibility = 'hidden';
+}
+
+
+
 //Reset Values for Start of Game
 function startGameReset(){
   
-
   //Basic Variables and ELements to Reset
   hitsCounter = 0;
   hits.innerText = (`Typos: ${hitsCounter}`)
@@ -130,6 +147,10 @@ function timerEnded(){
 
   //Display Score
   wordDisplay.innerText = (`Your Score: ${myScore.percentage}%`);
+
+  //Display Scoreboard
+  loadScoreInput();
+
 }
 
 //Inital Setup For Game
@@ -197,6 +218,43 @@ function stopMusic() {
   }, 100); 
 }
 
+
+//ScoreBoard Functions
+//
+function loadScoreInput(){
+  show(inputModal);
+  show(overlay);
+
+
+
+  //Change to getInput from InputName and validate
+
+
+}
+
+//Validate and Get Input from Name Entry
+function getInputName(){
+  if(inputName.value.length > 0){
+    showScoreBoard();
+  }
+}
+
+function showScoreBoard(){
+  show(scoreBoard);
+  hide(inputModal);
+}
+
+
+
+//Storage
+function createLocalStorage(){
+  localStorage.setItem('user','gabe');
+}
+
+
+
+
 //Event Listeners
 utils.listen('click', startButton, startGame);
 utils.listen('input', input, getInput);
+utils.listen('click', inputButton, getInputName);
