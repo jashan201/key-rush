@@ -16,14 +16,20 @@ body {
     color: #fff;
 }
 
+main {
+  width: 100%;
+}
+
 .game-contents {
     display: grid;
     place-items: center;
+    height: 250px;
+    justify-content: space-between;
 }
 
 h1 {
     color: #C8FF00;
-    font-size: 45px;
+    font-size: 25px;
 }
 
 .start-button {
@@ -44,15 +50,16 @@ h1 {
 
 .timer {
     background-color: #C8FF00;
-    height: 45px;
-    width: 45px;
+    height: 65px;
+    width: 65px;
     border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #000;
-    font-size: 25px;
+    font-size: 35px;
     font-weight: 500;
+    margin-top: 10px;
 }
 
 #random-word {
@@ -87,10 +94,10 @@ h1 {
     background-color: #1A1D3A;
     border-radius: 5px;
     width: 350px;
-    height: 320px;
+    height: 620px;
     position: absolute;
-    top: 15%;
-    left: 41%;
+    top: 20%;
+    left: 78%;
     padding: 15px;
     z-index: 999;
     color: #ffffff;
@@ -98,7 +105,7 @@ h1 {
   
   
     h2 {
-      font-size: 24px;
+      font-size: 28px;
     }
     #modal-title{
       font-size: 28px;
@@ -113,6 +120,7 @@ h1 {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
+    color: #000;
   }
   
   .score-button {
@@ -143,16 +151,17 @@ h1 {
     background-color: #0c7bb3;
   }
   
-.input-name {
+/* .input-name {
 
 }
 
 .input-button {
 
-}
+} */
 
 .score-board{
     visibility: hidden;
+    background-color: #c8ff005d;
 }
 .input-modal    {
     visibility: hidden;
@@ -166,6 +175,24 @@ h1 {
 /* ------------------------------ */
 /*     mobile view                */
 /* ------------------------------ */
+
+/* laptop view */
+@media (min-width: 769px) {
+  h1 {
+    position: absolute;
+    top: 45px;
+    left: 75px;
+  }
+}
+
+/* tablet view */
+@media (min-width: 481px) and (max-width: 768px) {
+  h1 {
+    position: absolute;
+    top: 45px;
+    left: 75px;
+  }
+}
 
 @media (max-width: 480px) {
 
