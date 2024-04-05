@@ -156,13 +156,7 @@ h1 {
     background-color: #0c7bb3;
   }
   
-/* .input-name {
 
-}
-
-.input-button {
-
-} */
 
 .score-board{
     visibility: hidden;
@@ -183,7 +177,6 @@ h1 {
   color: #fff;
   width: 100%;
   font-size: 40px;
-  visibility: hidden;
 }
 
 /* ------------------------------ */

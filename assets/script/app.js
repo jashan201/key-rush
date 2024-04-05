@@ -77,7 +77,7 @@ function startGameReset(){
   gameStart = true;
   input.disabled = false;
   input.value = "";
-  timer.innerText = 99;
+  timer.innerText = gameLength;
   score = 0;
 
   //Reset Button Turned On
