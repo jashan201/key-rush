@@ -8,33 +8,27 @@ const wordDisplay = utils.getElement('random-word');
 const timer = utils.getElement('timer');
 const hits = utils.getElement('hits');
 //Modal Elements
-// const inputName = utils.getElement('input-name');
-// const inputButton = utils.getElement('input-button');
-// const inputModal = utils.select('.input-modal');
 const scoreBoard = utils.select('.score-board');
-const overlay = utils.select('.overlay');
 const displayScoreArea = utils.getElement('display-scores');
 
 const { log } = console;
-
 // localStorage.clear();
-
 
 // List of Words, Move
 const listOfWords = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
-'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute',
-'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle',
-'eclipse', 'calculator', 'trouble', 'watermelon', 'developer', 'philosophy',
-'database', 'periodic', 'capitalism', 'abominable', 'component', 'future',
-'pasta', 'microwave', 'jungle', 'wallet', 'canada', 'coffee', 'beauty', 'agency',
-'chocolate', 'eleven', 'technology', 'alphabet', 'knowledge', 'magician',
-'professor', 'triangle', 'earthquake', 'baseball', 'beyond', 'evolution',
-'banana', 'perfume', 'computer', 'management', 'discovery', 'ambition', 'music',
-'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 'button',
-'superman', 'library', 'unboxing', 'bookstore', 'language', 'homework',
-'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery',
-'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
-'keyboard', 'window'];
+  'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute',
+  'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle',
+  'eclipse', 'calculator', 'trouble', 'watermelon', 'developer', 'philosophy',
+  'database', 'periodic', 'capitalism', 'abominable', 'component', 'future',
+  'pasta', 'microwave', 'jungle', 'wallet', 'canada', 'coffee', 'beauty', 'agency',
+  'chocolate', 'eleven', 'technology', 'alphabet', 'knowledge', 'magician',
+  'professor', 'triangle', 'earthquake', 'baseball', 'beyond', 'evolution',
+  'banana', 'perfume', 'computer', 'management', 'discovery', 'ambition', 'music',
+  'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 'button',
+  'superman', 'library', 'unboxing', 'bookstore', 'language', 'homework',
+  'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery',
+  'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
+  'keyboard', 'window'];
 
 //Game Variables
 let currentWords = [];
@@ -45,8 +39,8 @@ let hitsCounter = 0;
 let changeWord = false;
 input.disabled = true;
 let resetButton = false;
-let score = 0;
 let interval;
+
 
 //Score Variables
 
@@ -78,7 +72,6 @@ function startGameReset(){
   input.disabled = false;
   input.value = "";
   timer.innerText = gameLength;
-  score = 0;
 
   //Reset Button Turned On
   startButton.innerText = 'Reset';
@@ -153,7 +146,7 @@ function timerEnded(){
   stopMusic();
 
   //Object
-  const myScore = new Score(new Date(), hitsCounter, calculatePercentage());
+  // const myScore = new Score(new Date(), hitsCounter, calculatePercentage());
 
   //Display Score
   wordDisplay.innerText = (`Your Score: ${hitsCounter}`);
@@ -296,9 +289,8 @@ function createScoreListing(div,placeh2,scoreh2,dateh2){
 
 //Display Reconds
 function displayRecords(recordArray){
-
   for(let i = 0; i < recordArray.length; i++){
-    console.log(recordArray[i]);
+    // console.log(recordArray[i]);
     let obj = (recordArray[i]);
     let scoreBox = createDiv('score-box');
     let placeh2 = createHTML('h2', i+1);
