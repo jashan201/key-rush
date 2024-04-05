@@ -45,7 +45,7 @@ let interval;
 //Score Variables
 
 //Set Game Length in Seconds
-let gameLength = 1;
+let gameLength = 15;
 
 //Audio
 const bgMusic = new Audio('./assets/audio/bgmusic.mp3');
